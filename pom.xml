@@ -22,7 +22,7 @@
     <vertx.version>3.6.3</vertx.version>
     <junit-jupiter.version>5.4.0</junit-jupiter.version>
 
-    <main.verticle>com.dt.learn.Learn-Vertx.MainVerticle</main.verticle>
+    <main.verticle>com.dt.learn.vertx.MainVerticle</main.verticle>
   </properties>
 
   <dependencyManagement>
@@ -41,6 +41,22 @@
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-core</artifactId>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/io.vertx/vertx-web -->
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-web</artifactId>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/io.vertx/vertx-web-client -->
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-web-client</artifactId>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/io.vertx/vertx-jdbc-client -->
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-jdbc-client</artifactId>
     </dependency>
     <dependency>
       <groupId>io.vertx</groupId>

@@ -1,4 +1,4 @@
-package com.dt.learn.Learn_Vertx;
+package com.dt.learn.vertx;
 
 import io.vertx.core.Vertx;
 import io.vertx.junit5.Timeout;
@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(VertxExtension.class)
@@ -26,7 +27,7 @@ public class TestMainVerticle {
   @Timeout(value = 10, timeUnit = TimeUnit.SECONDS)
   void start_http_server(Vertx vertx, VertxTestContext testContext) throws Throwable {
     vertx.createHttpClient().getNow(8888, "localhost", "/", response -> testContext.verify(() -> {
-      assertTrue(response.statusCode() == 200);
+      assertEquals(200, response.statusCode());
       response.handler(body -> {
         assertTrue(body.toString().contains("Hello from Vert.x!"));
         testContext.completeNow();

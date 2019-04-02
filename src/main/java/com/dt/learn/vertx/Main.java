@@ -1,5 +1,6 @@
 package com.dt.learn.vertx;
 
+import com.dt.learn.vertx.http.VertHttpClient;
 import io.vertx.core.Vertx;
 
 /**
@@ -12,6 +13,8 @@ public class Main {
 
     Vertx vertx = Vertx.vertx();
     vertx.deployVerticle(MainVerticle.class.getName());
+
+//    vertx.deployVerticle(VertHttpClient.class.getName());
 
   }
 

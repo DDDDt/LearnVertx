@@ -5,6 +5,7 @@ import io.vertx.core.Future;
 import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.eventbus.MessageConsumer;
+import io.vertx.core.http.HttpServerOptions;
 
 public class MainVerticle extends AbstractVerticle {
 
@@ -14,11 +15,21 @@ public class MainVerticle extends AbstractVerticle {
   @Override
   public void start(Future<Void> startFuture) throws Exception {
 
+    HttpServerOptions httpServerOptions = new HttpServerOptions().setLogActivity(true);
+
     // handler 处理器 1
-    vertx.createHttpServer().requestHandler(req -> {
+    vertx.createHttpServer(httpServerOptions).requestHandler(req -> {
+      System.out.println(req.path());
+      System.out.println(req.headers().get("user-agent"));
+      req.handler(buffer -> {
+        System.out.println("接收到的值"+buffer.length());
+      });
       req.response()
         .putHeader("content-type", "text/plain")
         .end("Hello from Vert.x!");
+      req.endHandler(v -> {
+        System.out.println("结束");
+      });
     }).listen(8888, http -> {
       if (http.succeeded()) {
         startFuture.complete();

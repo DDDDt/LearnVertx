@@ -19,6 +19,28 @@ Router 接受 HTTP 请求, 并查找首个匹配该请求的 `Route`, 然后将�
 调用处理器的参数是一个 `RoutingContext` 对象. 它不仅包含了 Vert.x 中标准的 `HttpServerRequest` 和
 `HttpServerResponse`, 还包含了各种用于 Vert.x Web 使用的 东西.  
 每一个被路由的请求对应一个唯一的 `RoutingContext`, 这个实例会被传递到所有处理这个请求的处理器上.  
-当我们创建了处理器之后, 我们设置了 HTTP 服务器的请求处理器, 使所有的请求都通过 `accept` 处理.
+当我们创建了处理器之后, 我们设置了 HTTP 服务器的请求处理器, 使所有的请求都通过 `accept` 处理.  
 
+#### 2. 路由顺序
+默认的路由的匹配顺序与添加到 `Router` 的顺序一致.
+当一个请求到达时, `Router` 会一步一步检查每一个 `Route` 是否匹配, 如果匹配则对应的
+处理器会被调用.  
+如果处理器随后调用了 `next` , 则下一个匹配的 `Route` 对应的处理器(如果有)会被调用, 以此内推.  
+如果想要覆盖路由默认的顺序, 您可以通过 `order` 方法为每一个路由指定一个 Integer 的值.
+当 `Route` 被创建时 `order` 会被赋值为其被添加到 `Router` 时的序号
+
+#### 3. 错误处理 
+如果没有为请求匹配到任何路由, Vert.x Web 会声明一个 404 错误.  
+错误处理使用 : `failureHandler`
+#### 4. Cookie
+Vert.x Web 通过 Cookie 处理器 `CookieHandler` 来支持 cookie.  
+您需要保证 cookie 处理器能够匹配到所有您需要这个功能的请求.
+```$xslt
+router.route().handler(CookieHandler.create())
+```
+#### 5. 处理会话
+Vert.x Web 提供了开箱即用的会话 (session) 支持.  
+会话维持了 HTTP 请求和浏览器会话之间的关系, 并提供了可以设置会话范围的信息的能力.  
+需要子啊匹配的 `Route` 上注册会话处理器 `SessionHandler` 来启用会话功能, 并确保它能够在应用逻辑之前执行.  
+会话处理器会创建会话 Cookie 并查找会话信息, 不需要自己来实现.  
 

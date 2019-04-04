@@ -1,6 +1,7 @@
 package com.dt.learn.vertx;
 
 import com.dt.learn.vertx.http.VertHttpClient;
+import com.dt.learn.vertx.jdbc.VertMysql;
 import com.dt.learn.vertx.mongo.VertMongo;
 import com.dt.learn.vertx.web.VertWeb;
 import com.dt.learn.vertx.webClient.VertWebClient;
@@ -21,7 +22,8 @@ public class Main {
 
 //    vertx.deployVerticle(VertWeb.class.getName());
 //    vertx.deployVerticle(VertWebClient.class.getName());
-    vertx.deployVerticle(VertMongo.class.getName());
+//    vertx.deployVerticle(VertMongo.class.getName());
+    vertx.deployVerticle(VertMysql.class.getName());
 
   }
 
